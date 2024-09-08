@@ -1,0 +1,41 @@
+#title {
+    background: linear-gradient(300deg, #000f80, #050505, #5923b0);
+    background-size: 180% 180%;
+    animation: gradient-animation 18s ease infinite;
+    height: 100vh;
+}
+
+  
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.btn-primary {
+  background-color: #4a34c7;
+  border: #4a34c7;
+}
+
+.first-svg {
+  margin-left: 10px
+}
+
+.second-svg {
+  margin-left: 5px
+}
+
+#myphoto {
+  height: 30vh;
+  border-radius: 50%;
+}
+
+.photo-container {
+  text-align: center;
+}
