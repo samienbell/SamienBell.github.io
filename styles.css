@@ -1,0 +1,489 @@
+/* =========================================================================
+   Design tokens
+   Single source of truth for color, type, spacing, and motion.
+   Themes are swapped by toggling [data-theme] on <html>.
+   ========================================================================= */
+:root {
+  --font-sans: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Fluid type scale */
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --step-3: clamp(2rem, 1.6rem + 2vw, 3.2rem);
+
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --maxw: 68rem;
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Brand accent (shared across themes) */
+  --accent: #6c8cff;
+  --accent-strong: #4f6dff;
+}
+
+/* Dark theme — the site's only theme. */
+:root {
+  --bg: #0d1117;
+  --bg-elev: #161b22;
+  --bg-elev-2: #1c232d;
+  --border: #2a323d;
+  --text: #e6edf3;
+  --text-muted: #9aa7b4;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  /* Animated background: deep black → indigo → purple. */
+  --grad: linear-gradient(-45deg, #05010d, #100a2e, #1a1458, #2a0a52, #12082e, #05010d);
+
+  /* Metallic near-black surface for panels/buttons that sit on the gradient.
+     A top-lit diagonal gradient plus a hairline top highlight reads as brushed
+     dark metal and holds strong contrast against the vivid background. */
+  --metal: linear-gradient(145deg, #191d24 0%, #0c0e12 55%, #060709 100%);
+  --metal-header: linear-gradient(180deg, rgba(18, 21, 27, 0.92), rgba(8, 9, 12, 0.82));
+  --metal-border: #333b47;
+  --metal-sheen: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                 inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; background: var(--bg); }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--text);
+  /* Transparent so the fixed gradient in body::before shows through.
+     The fallback color lives on <html>. */
+  background: transparent;
+  -webkit-font-smoothing: antialiased;
+  transition: color var(--transition);
+}
+
+/* Full-viewport animated gradient that sits behind all content.
+   A fixed pseudo-element keeps it from scrolling and avoids repainting
+   layout; only background-position animates, which the compositor handles
+   cheaply. background-size > 100% gives the position shift room to travel. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--grad);
+  background-size: 400% 400%;
+  animation: gradientDrift 30s ease-in-out infinite;
+  transition: background-image var(--transition);
+}
+
+h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; display: block; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 var(--radius-sm) 0;
+  z-index: 100;
+}
+.skip-link:focus { left: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  /* Exception: the background gradient keeps drifting regardless of the
+     reduced-motion preference (per request). It's a slow, ambient loop with
+     no flashing, so it stays comfortable even for motion-sensitive users. */
+  body::before {
+    animation-duration: 30s !important;
+  }
+}
+
+/* =========================================================================
+   Header / nav
+   ========================================================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  background: var(--metal-header);
+  border-bottom: 1px solid var(--metal-border);
+  box-shadow: var(--metal-sheen), 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.nav {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 700;
+  color: var(--text);
+}
+.nav__brand:hover { text-decoration: none; }
+
+.nav__logo {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.nav__links {
+  list-style: none;
+  display: flex;
+  gap: var(--space-md);
+  margin: 0 0 0 auto;
+  padding: 0;
+}
+.nav__links a {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: var(--step--1);
+}
+.nav__links a:hover { color: var(--text); text-decoration: none; }
+
+@media (max-width: 34rem) {
+  .nav__links { display: none; }
+  .nav__links { margin-left: auto; }
+}
+
+/* =========================================================================
+   Hero
+   ========================================================================= */
+.hero {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md);
+  text-align: center;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: rise 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero__avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  box-shadow: var(--shadow);
+  background: var(--bg-elev);
+}
+
+.hero__name {
+  font-size: var(--step-3);
+  margin: var(--space-md) 0 0;
+}
+
+.hero__role {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: var(--step-1);
+  margin: var(--space-xs) 0 0;
+}
+.hero__role-prompt { color: var(--accent); margin-right: 0.4em; }
+
+.hero__bio {
+  max-width: 42rem;
+  color: var(--text-muted);
+  margin: var(--space-md) 0 0;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.hero__socials {
+  list-style: none;
+  display: flex;
+  gap: var(--space-md);
+  padding: 0;
+  margin: var(--space-lg) 0 0;
+}
+.hero__socials a { color: var(--text-muted); transition: color var(--transition), transform var(--transition); display: inline-flex; }
+.hero__socials a:hover { color: var(--accent); transform: translateY(-2px); }
+
+/* =========================================================================
+   Buttons
+   ========================================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--step--1);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition), background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.btn:hover { text-decoration: none; transform: translateY(-2px); }
+.btn--lg { padding: 0.9rem 1.6rem; font-size: var(--step-0); }
+
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(79, 109, 255, 0.35);
+}
+.btn--primary:hover { background: var(--accent-strong); }
+
+.btn--ghost {
+  background: var(--metal);
+  color: var(--text);
+  border-color: var(--metal-border);
+  box-shadow: var(--metal-sheen);
+}
+.btn--ghost:hover { border-color: var(--accent); }
+
+/* =========================================================================
+   Sections
+   ========================================================================= */
+.section {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md);
+}
+
+.section__head { text-align: center; margin-bottom: var(--space-lg); }
+.section__title { font-size: var(--step-2); margin: 0; }
+.section__subtitle { color: var(--text-muted); margin: var(--space-xs) auto 0; max-width: 40rem; }
+
+/* =========================================================================
+   Projects grid
+   ========================================================================= */
+.projects {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-md);
+}
+.projects__loading { color: var(--text-muted); text-align: center; }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--metal);
+  border: 1px solid var(--metal-border);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  box-shadow: var(--metal-sheen);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: var(--metal-sheen), var(--shadow);
+}
+
+.card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+.card__icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elev-2);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.card__links { display: flex; gap: var(--space-xs); }
+.card__links a {
+  color: var(--text-muted);
+  display: inline-flex;
+  padding: 0.3rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background-color var(--transition);
+}
+.card__links a:hover { color: var(--accent); background: var(--bg-elev-2); }
+
+.card__title { font-size: var(--step-1); margin: var(--space-sm) 0 0; }
+.card__desc { color: var(--text-muted); font-size: var(--step--1); margin: var(--space-xs) 0 var(--space-md); flex-grow: 1; }
+
+.card__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding: 0;
+  margin: 0;
+}
+.card__tags li {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+
+/* =========================================================================
+   Experience timeline
+   ========================================================================= */
+.timeline {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 48rem;
+  position: relative;
+}
+/* The vertical spine that connects entries. */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: 7px;
+  width: 2px;
+  background: var(--border);
+}
+.timeline__loading { color: var(--text-muted); }
+
+.timeline__item {
+  position: relative;
+  padding: 0 0 var(--space-lg) var(--space-lg);
+}
+.timeline__item:last-child { padding-bottom: 0; }
+
+.timeline__marker {
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.timeline__body {
+  background: var(--metal);
+  border: 1px solid var(--metal-border);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  box-shadow: var(--metal-sheen);
+  transition: border-color var(--transition), transform var(--transition);
+}
+.timeline__item:hover .timeline__body {
+  border-color: var(--accent);
+  transform: translateX(3px);
+}
+
+.timeline__headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+.timeline__role { font-size: var(--step-1); margin: 0; }
+.timeline__at { color: var(--text-muted); font-weight: 400; }
+.timeline__company { color: var(--accent); }
+.timeline__company a { color: inherit; }
+.timeline__meta {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  margin: 0;
+  white-space: nowrap;
+}
+.timeline__summary { color: var(--text-muted); font-size: var(--step--1); margin: var(--space-sm) 0 0; }
+
+.timeline__highlights {
+  margin: var(--space-sm) 0 0;
+  padding-left: 1.1rem;
+  color: var(--text);
+  font-size: var(--step--1);
+}
+.timeline__highlights li { margin-top: 0.35rem; }
+.timeline__highlights li::marker { color: var(--accent); }
+
+.timeline__tags { margin-top: var(--space-md); }
+
+/* =========================================================================
+   Footer
+   ========================================================================= */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+
+/* =========================================================================
+   Animations
+   ========================================================================= */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slow, periodic drift of the background gradient. Loops seamlessly by
+   returning to the starting position. */
+@keyframes gradientDrift {
+  0%   { background-position: 0% 50%; }
+  25%  { background-position: 50% 0%; }
+  50%  { background-position: 100% 50%; }
+  75%  { background-position: 50% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Reveal-on-scroll (progressive enhancement; visible by default if JS off) */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 600ms ease, transform 600ms ease; }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
