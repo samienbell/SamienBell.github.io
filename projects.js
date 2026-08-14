@@ -20,8 +20,7 @@ window.PROJECTS = [
       "An object-oriented chess program with custom piece graphic designs and a chess engine built from scratch.",
     tags: ["C++", "X11"],
     icon: "C",
-    links: {
-      demo: "https://example.com/demo",
+    links: {      
       source: "https://github.com/myra-gupta238/CS246-Chess-Project",
     },
   },
