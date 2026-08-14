@@ -16,19 +16,19 @@
  */
 window.EXPERIENCE = [
   {
-    role: "Senior Software Engineer",
-    company: "Acme Corp",
-    companyUrl: "https://example.com",
-    period: "2022 — Present",
-    location: "Remote",
+    role: "AI Developer I",
+    company: "Intact Financial Corporation",
+    companyUrl: "https://www.intactfc.com/",
+    period: "May 2026 — August 2026",
+    location: "Toronto, ON",
     summary:
-      "Lead engineer on the platform team, owning the services that power billing and usage metering for millions of requests per day.",
+      "Developed and implemented enhancements for an internal AI application, improving functionality, maintainability, and system performance.",
     highlights: [
-      "Cut p99 API latency 45% by redesigning the caching layer and query paths.",
-      "Drove migration from a monolith to event-driven services with zero downtime.",
-      "Mentored 4 engineers; established the team's code-review and on-call practices.",
+      "Implemented LLM cost tracking by logging usage events to a database and developing API endpoints to retrieve cost data.",
+      "Designed and built a cost-tracking dashboard in the frontend for admin users.",
+      "Assisted in the first production deployment of an internal AI application, collaborating with cross-functional teams to validate functionality, resolve deployment issues, and ensure a successful launch.",
     ],
-    tags: ["Go", "PostgreSQL", "Kafka", "AWS", "Kubernetes"],
+    tags: ["Python", "React", "PostgreSQL", "AWS", "Docker"],
   },
   {
     role: "Software Engineer",
@@ -44,16 +44,4 @@ window.EXPERIENCE = [
     ],
     tags: ["TypeScript", "React", "Node.js", "GraphQL"],
   },
-  {
-    role: "Software Engineer Intern",
-    company: "Initech",
-    period: "Summer 2018",
-    location: "San Francisco, CA",
-    summary:
-      "Prototyped internal tooling for the data team and shipped it to production.",
-    highlights: [
-      "Automated a manual reporting pipeline, saving ~10 hours of analyst time weekly.",
-    ],
-    tags: ["Python", "Flask", "Pandas"],
-  },
-];
+  ];
