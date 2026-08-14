@@ -15,45 +15,24 @@
  */
 window.PROJECTS = [
   {
-    name: "Distributed Task Queue",
+    name: "Chess",
     blurb:
-      "A horizontally-scalable job queue with at-least-once delivery, exponential backoff, and a live web dashboard. Handles 10k jobs/sec on commodity hardware.",
-    tags: ["Go", "Redis", "gRPC", "Docker"],
-    icon: "TQ",
+      "An object-oriented chess program with custom piece graphic designs and a chess engine built from scratch.",
+    tags: ["C++", "X11"],
+    icon: "C",
     links: {
       demo: "https://example.com/demo",
-      source: "https://github.com/samienbell/task-queue",
+      source: "https://github.com/myra-gupta238/CS246-Chess-Project",
     },
   },
   {
-    name: "TypeScript Query Builder",
+    name: "GetAway Guru",
     blurb:
-      "A fully type-safe SQL query builder that infers result types from your schema at compile time. Zero runtime dependencies.",
-    tags: ["TypeScript", "SQL", "DX"],
-    icon: "QB",
+      "A travel recommendation program with a custom GUI and a database with 100+ destinations.",
+    tags: ["Java", "Swing"],
+    icon: "GG",
     links: {
-      source: "https://github.com/samienbell/query-builder",
+      source: "https://github.com/samienbell/GetawayGuru",
     },
-  },
-  {
-    name: "Realtime Collab Editor",
-    blurb:
-      "Collaborative document editor with conflict-free replicated data types (CRDTs) for offline-first editing and instant sync across clients.",
-    tags: ["React", "WebSocket", "CRDT", "Rust/WASM"],
-    icon: "CE",
-    links: {
-      demo: "https://example.com/editor",
-      source: "https://github.com/samienbell/collab-editor",
-    },
-  },
-  {
-    name: "Observability CLI",
-    blurb:
-      "A terminal dashboard that streams metrics, logs, and traces from Kubernetes clusters into a single navigable TUI. Built for on-call speed.",
-    tags: ["Rust", "Kubernetes", "OpenTelemetry"],
-    icon: "OB",
-    links: {
-      source: "https://github.com/samienbell/observe-cli",
-    },
-  },
+  },  
 ];
