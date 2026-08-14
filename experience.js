@@ -26,22 +26,22 @@ window.EXPERIENCE = [
     highlights: [
       "Implemented LLM cost tracking by logging usage events to a database and developing API endpoints to retrieve cost data.",
       "Designed and built a cost-tracking dashboard in the frontend for admin users.",
-      "Assisted in the first production deployment of an internal AI application, collaborating with cross-functional teams to validate functionality, resolve deployment issues, and ensure a successful launch.",
+      "Assisted in the first production deployment of the application, collaborating with cross-functional teams to validate functionality, resolve deployment issues, and ensure a successful launch.",
     ],
     tags: ["Python", "React", "PostgreSQL", "AWS", "Docker"],
   },
   {
-    role: "Software Engineer",
-    company: "Globex",
-    companyUrl: "https://example.com",
-    period: "2019 — 2022",
-    location: "New York, NY",
+    role: "Software Developer Intern",
+    company: "Geotab",
+    companyUrl: "https://www.geotab.com/",
+    period: "September 2025 — December 2025",
+    location: "Kitchener, ON",
     summary:
-      "Full-stack engineer on the customer-facing web app, shipping features end-to-end from database to UI.",
+      "Full-stack developer on the customer-facing fleet management web platform MyGeotab, primarily working on the Electric Vehicle Suitability Assessment (EVSA).",
     highlights: [
-      "Built a self-serve onboarding flow that lifted activation by 30%.",
-      "Introduced end-to-end testing, reducing regressions caught in production by half.",
+      "Resolved frontend bugs that arose during the migration of EVSA into the MyGeotab monorepo.",
+      "Built validators to ensure no logic errors were present before sending API requests.",
     ],
-    tags: ["TypeScript", "React", "Node.js", "GraphQL"],
+    tags: ["C#/.NET", "React", "TypeScript", "PostgreSQL", "Docker"],
   },
   ];
