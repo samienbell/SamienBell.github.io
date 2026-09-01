@@ -15,6 +15,17 @@
  */
 window.PROJECTS = [
   {
+    name: "The Gang Online",
+    blurb:
+      "A web application for online multiplayer gameplay of the card game The Gang.",
+    tags: ["React", "TypeScript"],
+    icon: "TGO",
+    links: {
+      demo: "https://the-gang.coop-poker-online.workers.dev",
+      source: "https://github.com/samienbell/GetawayGuru",
+    },
+  },
+  {
     name: "Chess",
     blurb:
       "An object-oriented chess program with custom piece graphic designs and a chess engine built from scratch.",
