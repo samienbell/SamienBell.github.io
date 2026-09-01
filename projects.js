@@ -22,7 +22,7 @@ window.PROJECTS = [
     icon: "TGO",
     links: {
       demo: "https://the-gang.coop-poker-online.workers.dev",
-      source: "https://github.com/samienbell/GetawayGuru",
+      source: "https://github.com/samienbell/the-gang-online",
     },
   },
   {
