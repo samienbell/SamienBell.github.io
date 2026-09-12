@@ -16,6 +16,16 @@
  */
 window.EXPERIENCE = [
   {
+    role: "Research Assistant",
+    company: "University of Waterloo — Dr. Yizhou Zhang",
+    companyUrl: "https://cs.uwaterloo.ca/~yizhou/",
+    period: "September 2026 — Present",
+    location: "Waterloo, ON",
+    summary:
+      "Develop new features for a compiler that translates discrete probabilistic programs into dense tensor computations for accelerated exact inference.",
+    tags: ["Python", "Bash"],
+  },
+  {
     role: "AI Developer I",
     company: "Intact Financial Corporation",
     companyUrl: "https://www.intactfc.com/",
